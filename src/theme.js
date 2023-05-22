@@ -1,6 +1,7 @@
 import { createContext, useState, useMemo } from "react";
 import { createTheme } from "@mui/material/styles";
 
+// color design tokens export
 export const tokens = (mode) => ({
     ...(mode === "dark"
         ? {
@@ -19,7 +20,7 @@ export const tokens = (mode) => ({
                   100: "#d0d1d5",
                   200: "#a1a4ab",
                   300: "#727681",
-                  400: "#434957",
+                  400: "#1F2A40",
                   500: "#141b2d",
                   600: "#101624",
                   700: "#0c101b",
@@ -48,7 +49,6 @@ export const tokens = (mode) => ({
                   800: "#58201e",
                   900: "#2c100f",
               },
-
               blueAccent: {
                   100: "#e1e2fe",
                   200: "#c3c6fd",
@@ -77,9 +77,9 @@ export const tokens = (mode) => ({
                   100: "#040509",
                   200: "#080b12",
                   300: "#0c101b",
-                  400: "#f2f0f0",
+                  400: "#f2f0f0", // manually changed
                   500: "#141b2d",
-                  600: "#434957",
+                  600: "#1F2A40",
                   700: "#727681",
                   800: "#a1a4ab",
                   900: "#d0d1d5",
@@ -106,29 +106,29 @@ export const tokens = (mode) => ({
                   800: "#f1b9b7",
                   900: "#f8dcdb",
               },
-
               blueAccent: {
-                  900: "#151632",
-                  800: "#2a2d64",
-                  700: "#3e4396",
-                  600: "#535ac8",
+                  100: "#151632",
+                  200: "#2a2d64",
+                  300: "#3e4396",
+                  400: "#535ac8",
                   500: "#6870fa",
-                  400: "#868dfb",
-                  300: "#a4a9fc",
-                  200: "#c3c6fd",
-                  100: "#e1e2fe",
+                  600: "#868dfb",
+                  700: "#a4a9fc",
+                  800: "#c3c6fd",
+                  900: "#e1e2fe",
               },
           }),
 });
 
+// mui theme settings
 export const themeSettings = (mode) => {
-    //used to manipulate colors by diffrent points
     const colors = tokens(mode);
     return {
-        pallete: {
+        palette: {
             mode: mode,
             ...(mode === "dark"
                 ? {
+                      // palette values for dark mode
                       primary: {
                           main: colors.primary[500],
                       },
@@ -145,6 +145,7 @@ export const themeSettings = (mode) => {
                       },
                   }
                 : {
+                      // palette values for light mode
                       primary: {
                           main: colors.primary[100],
                       },
@@ -191,11 +192,12 @@ export const themeSettings = (mode) => {
         },
     };
 };
-//Allows to change dark to light vise versa
+
+// context for color mode
 export const ColorModeContext = createContext({
     toggleColorMode: () => {},
 });
-//useFunction as hook to change theme from dark to light vise versa, default is dark
+
 export const useMode = () => {
     const [mode, setMode] = useState("dark");
 
@@ -205,8 +207,7 @@ export const useMode = () => {
         }),
         []
     );
-    //Passes dark or light as param to themeSettings
-    const theme = useMemo(() => createTheme(themeSettings(mode)), [mode]);
 
+    const theme = useMemo(() => createTheme(themeSettings(mode)), [mode]);
     return [theme, colorMode];
 };
